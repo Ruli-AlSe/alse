@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle';
-import { Navbar } from '@/components/navbar';
+import { Navbar } from '@/components/navigation/navbar';
 import Image from 'next/image';
 
 export default function Home() {
