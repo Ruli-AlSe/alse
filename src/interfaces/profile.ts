@@ -2,6 +2,8 @@ export interface Profile {
   id: number;
   name: string;
   last_name: string;
+  image_url: string;
+  about_me: string;
   headliner: string;
   bio: string;
   city: string;
@@ -9,9 +11,30 @@ export interface Profile {
   country: string;
   phone_number: string;
   social_media: SocialMedia;
-  skills: Skill[];
   education: Education[];
   jobs: Job[];
+  competences: Competence[];
+}
+
+export interface Competence {
+  category_title: string;
+  skills: Skill[];
+}
+
+export interface Skill {
+  id: number;
+  name: string;
+  icon_url: string;
+  level: string;
+  category: Category;
+}
+
+export interface Category {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+  company_id: number;
 }
 
 export interface Education {
@@ -39,26 +62,6 @@ export interface Job {
   end_date: string;
   activities: string[];
   profile_id: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Skill {
-  id: number;
-  name: string;
-  icon_url: string;
-  level: string;
-  created_at: string;
-  updated_at: string;
-  category: Category;
-}
-
-export interface Category {
-  id: number;
-  title: string;
-  description: string;
-  slug: string;
-  company_id: number;
   created_at: string;
   updated_at: string;
 }
