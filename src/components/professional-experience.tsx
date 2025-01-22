@@ -1,8 +1,12 @@
 import { Job } from '@/interfaces/profile';
 
-export const ProfessionalExperience = ({ jobs }: { jobs: Job[] }) => {
+interface Props {
+  jobs: Job[];
+}
+
+export const ProfessionalExperience = ({ jobs }: Props) => {
   return (
-    <section className="flex flex-col gap-8">
+    <section className="w-full px-3 flex flex-col gap-8">
       <h2 className="text-2xl font-bold">Professional Experience</h2>
       <div className="flex flex-col gap-8">
         {jobs.map((job) => (

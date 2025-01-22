@@ -1,18 +1,34 @@
-interface MainInfoProps {
+import Image from 'next/image';
+
+interface Props {
   firstname: string;
   lastName: string;
+  imageUrl?: string;
   headliner: string;
   bio: string;
 }
 
-export const MainInfo = ({ firstname, lastName, headliner, bio }: MainInfoProps) => {
+export const MainInfo = ({ firstname, lastName, imageUrl, headliner, bio }: Props) => {
   return (
-    <div className="w-full bg-orange-800 text-white p-8 rounded-lg">
-      <h1 className="text-2xl font-bold">
-        Hi there 👋! My name is {firstname} {lastName} I&apos;m {headliner}
-      </h1>
-      <h4 className="text-lg font-bold mt-6">A brief introduction about me...</h4>
-      <p className="text-lg">{bio}</p>
-    </div>
+    <section className="w-full text-light-blue dark:text-white rounded-lg flex flex-col items-center gap-4 md:flex-row py-7 px-3">
+      <Image
+        src={imageUrl ?? ''}
+        className="rounded-full w-[200px] h-[200px] border-2 border-light-blue dark:border-white"
+        width={200}
+        height={200}
+        alt={`${firstname} photo`}
+      />
+      <div>
+        <h1 className="text-xl md:text-2xl font-bold">
+          Hi there 👋! My name is{' '}
+          <span className="text-light-green">
+            {firstname} {lastName}
+          </span>{' '}
+          I&apos;m <span className="text-light-green">{headliner}</span>
+        </h1>
+        <h4 className="md:text-lg font-bold my-6">A brief introduction about me...</h4>
+        <p className="md:text-lg text-justify">{bio}</p>
+      </div>
+    </section>
   );
 };

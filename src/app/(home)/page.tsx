@@ -1,7 +1,9 @@
+import { Certifications } from '@/components/certifications';
 import { Footer } from '@/components/footer';
 import { MainInfo } from '@/components/main-info';
 import { Navbar } from '@/components/navigation/navbar';
 import { ProfessionalExperience } from '@/components/professional-experience';
+import { Skills } from '@/components/skills';
 import { SocialMediaInfo } from '@/components/social-media';
 import { Profile } from '@/interfaces/profile';
 
@@ -17,22 +19,25 @@ export default async function Home() {
   const profile = await getProfile();
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white dark:from-dark-blue dark:from-30% to-gray-200 dark:to-light-blue">
       <Navbar />
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-          <MainInfo
-            firstname={profile.name}
-            lastName={profile.last_name}
-            headliner={profile.headliner}
-            bio={profile.bio}
-          />
-          <SocialMediaInfo socialMedia={profile.social_media} className="w-6 h-6 text-green-700" />
-          <ProfessionalExperience jobs={profile.jobs} />
-          <code>{JSON.stringify(profile)}</code>
-        </main>
-        <Footer socialMedia={profile.social_media} />
-      </div>
-    </>
+      <main className="flex flex-col gap-8 items-start md:p-16 max-w-6xl">
+        <MainInfo
+          firstname={profile.name}
+          lastName={profile.last_name}
+          imageUrl={profile.image_url}
+          headliner={profile.headliner}
+          bio={profile.bio}
+        />
+        <SocialMediaInfo
+          socialMedia={profile.social_media}
+          className="w-full justify-center md:justify-end"
+        />
+        <ProfessionalExperience jobs={profile.jobs} />
+        <Skills competences={profile.competences} />
+        <Certifications educations={profile.education} />
+      </main>
+      <Footer socialMedia={profile.social_media} />
+    </div>
   );
 }

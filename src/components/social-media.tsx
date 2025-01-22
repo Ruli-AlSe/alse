@@ -1,4 +1,4 @@
-import { SocialMedia } from '@/interfaces/profile';
+import clsx from 'clsx';
 import {
   FaFacebook,
   FaGithub,
@@ -8,13 +8,14 @@ import {
   FaXTwitter,
 } from 'react-icons/fa6';
 
-export const SocialMediaInfo = ({
-  socialMedia,
-  className,
-}: {
+import { SocialMedia } from '@/interfaces/profile';
+
+interface Props {
   socialMedia: SocialMedia;
   className?: string;
-}) => {
+}
+
+export const SocialMediaInfo = ({ socialMedia, className }: Props) => {
   const validSocialMedia = Object.keys(socialMedia).filter(
     (key) => socialMedia[key as keyof SocialMedia]
   );
@@ -37,17 +38,17 @@ export const SocialMediaInfo = ({
   };
 
   return (
-    <div className="flex gap-4">
+    <div className={clsx('flex gap-4 flex-wrap px-5', className)}>
       {validSocialMedia.map((sm) => (
         <a
           key={sm}
           href={socialMedia[sm as keyof SocialMedia]!}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex gap-2 items-center hover:underline hover:underline-offset-4"
+          className="flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
         >
-          {getIcon(sm, className)}
-          {sm.at(0)!.toUpperCase() + sm.slice(1)}
+          {getIcon(sm, 'w-6 h-6 text-light-green')}
+          <span>{sm.at(0)!.toUpperCase() + sm.slice(1)}</span>
         </a>
       ))}
     </div>
