@@ -47,7 +47,7 @@ export const SocialMediaInfo = ({ socialMedia, className }: Props) => {
           rel="noopener noreferrer"
           className="flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
         >
-          {getIcon(sm, 'w-6 h-6 text-light-green')}
+          {getIcon(sm, 'w-6 h-6 text-light-green dark:text-light-gold')}
           <span>{sm.at(0)!.toUpperCase() + sm.slice(1)}</span>
         </a>
       ))}

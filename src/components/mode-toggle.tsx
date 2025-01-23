@@ -26,7 +26,7 @@ export function ModeToggle({ className }: Props) {
           variant="outline"
           size="icon"
           className={clsx(
-            'dark:bg-gray-700 border-gray-300 text-light-blue dark:text-gray-300',
+            'dark:bg-gray-700 bg-blue-200 border-slate-800 text-light-blue dark:text-gray-300',
             className
           )}
         >

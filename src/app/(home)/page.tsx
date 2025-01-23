@@ -2,8 +2,8 @@ import { Certifications } from '@/components/certifications';
 import { Footer } from '@/components/footer';
 import { MainInfo } from '@/components/main-info';
 import { Navbar } from '@/components/navigation/navbar';
-import { ProfessionalExperience } from '@/components/professional-experience';
-import { Skills } from '@/components/skills';
+import { JobsSection } from '@/components/professional-experience/jobs-section';
+import { SkillsSection } from '@/components/skills-showcase/skills-section';
 import { SocialMediaInfo } from '@/components/social-media';
 import { Profile } from '@/interfaces/profile';
 
@@ -19,7 +19,7 @@ export default async function Home() {
   const profile = await getProfile();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white dark:from-dark-blue dark:from-30% to-gray-200 dark:to-light-blue">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 dark:from-dark-blue dark:from-30% to-teal-100 dark:to-light-blue">
       <Navbar />
       <main className="flex flex-col gap-8 items-start md:p-16 max-w-6xl">
         <MainInfo
@@ -33,8 +33,8 @@ export default async function Home() {
           socialMedia={profile.social_media}
           className="w-full justify-center md:justify-end"
         />
-        <ProfessionalExperience jobs={profile.jobs} />
-        <Skills competences={profile.competences} />
+        <JobsSection jobs={profile.jobs} />
+        <SkillsSection competences={profile.competences} />
         <Certifications educations={profile.education} />
       </main>
       <Footer socialMedia={profile.social_media} />

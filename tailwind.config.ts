@@ -13,10 +13,12 @@ export default {
         dark: {
           blue: '#041520',
           green: '#0c3e1d',
+          gold: '#b8a70b',
         },
         light: {
-          blue: '#007a93',
+          blue: '#002b6b',
           green: '#1db550',
+          gold: '#ffd700',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
