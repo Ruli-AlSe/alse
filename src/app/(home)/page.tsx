@@ -1,4 +1,4 @@
-import { Certifications } from '@/components/certifications';
+import { EducationTimeline } from '@/components/education/timeline';
 import { Footer } from '@/components/footer';
 import { MainInfo } from '@/components/main-info';
 import { Navbar } from '@/components/navigation/navbar';
@@ -35,7 +35,7 @@ export default async function Home() {
         />
         <JobsSection jobs={profile.jobs} />
         <SkillsSection competences={profile.competences} />
-        <Certifications educations={profile.education} />
+        <EducationTimeline educations={profile.education} />
       </main>
       <Footer socialMedia={profile.social_media} />
     </div>
