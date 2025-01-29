@@ -61,6 +61,7 @@ export interface Job {
   start_date: string;
   end_date: string;
   activities: string[];
+  skills: Skill[];
   profile_id: number;
   created_at: string;
   updated_at: string;

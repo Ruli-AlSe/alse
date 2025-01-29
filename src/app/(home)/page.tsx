@@ -19,7 +19,7 @@ export default async function Home() {
   const profile = await getProfile();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 dark:from-dark-blue dark:from-30% to-teal-100 dark:to-light-blue">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 dark:from-dark-blue from-80% to-95% to-teal-100 dark:to-light-blue">
       <Navbar />
       <main className="flex flex-col gap-8 items-start md:p-16 max-w-6xl">
         <MainInfo

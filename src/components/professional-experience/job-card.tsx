@@ -3,8 +3,12 @@ import { CalendarDays, Briefcase } from 'lucide-react';
 import { Job } from '@/interfaces/profile';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { formatDate } from '@/lib/utils';
+import { Badge } from '../ui/badge';
+import Image from 'next/image';
 
 export const JobCard = ({ job }: { job: Job }) => {
+  const skills = job.skills;
+
   return (
     <Card className="w-full dark:bg-dark-blue">
       <CardHeader>
@@ -36,16 +40,23 @@ export const JobCard = ({ job }: { job: Job }) => {
               ))}
             </ul>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2 text-dark-blue dark:text-white">Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {/* {skills.map((skill, index) => (
-                <Badge key={index} variant="secondary">
-                  {skill}
-                </Badge>
-              ))} */}
+          {skills.length > 0 && (
+            <div>
+              <h3 className="font-semibold mb-2 text-dark-blue dark:text-white">Technologies</h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <Badge
+                    key={skill.id}
+                    variant="secondary"
+                    className="flex justify-center items-center gap-3"
+                  >
+                    <Image src={skill.icon_url} alt={skill.name} width={20} height={20} />
+                    {skill.name}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </CardContent>
     </Card>
