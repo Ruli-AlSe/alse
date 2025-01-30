@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'robohash.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+      },
     ],
   },
 };
