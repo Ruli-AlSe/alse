@@ -12,7 +12,7 @@ export const JobCard = ({ job }: { job: Job }) => {
   return (
     <Card className="w-full dark:bg-dark-blue">
       <CardHeader>
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col md:flex-row justify-between items-start">
           <div>
             <CardTitle className="text-2xl font-bold text-light-green">
               {job.company_name}

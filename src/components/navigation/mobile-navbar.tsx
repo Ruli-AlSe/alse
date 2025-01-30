@@ -15,18 +15,18 @@ export const MobileNavbar = () => {
     <Sheet>
       <SheetTrigger className="md:hidden">
         <div
-          className="md:hidden flex items-center text-orange-400 dark:text-gray-100 p-1"
+          className="md:hidden flex items-center text-light-blue dark:text-white p-1"
           id="navbar_burger"
         >
           <Menu className="h-6 w-6" />
         </div>
       </SheetTrigger>
       <SheetOverlay className="md:hidden" />
-      <SheetContent className="md:hidden">
+      <SheetContent className="md:hidden bg-blue-200 dark:bg-dark-blue">
         <SheetHeader>
           <SheetTitle>ALSE</SheetTitle>
           <Link
-            className="w-full py-1.5 px-3 text-center bg-gray-100 rounded-md text-black dark:text-gray-300 dark:bg-gray-700"
+            className="py-1.5 px-3 m-1 text-center bg-blue-200 border border-slate-800 rounded-md text-light-blue hover:bg-blue-300 dark:hover:bg-gray-600 dark:text-gray-300 dark:bg-gray-700"
             href="/blog"
           >
             Blog

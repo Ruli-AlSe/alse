@@ -15,8 +15,8 @@ export const AchievementCard = ({
 
   return (
     <Card className="w-full bg-white dark:bg-dark-blue shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <CardHeader className="flex flex-row items-center space-x-4">
-        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+      <CardHeader className="flex flex-row items-center space-x-2 sm:space-x-4 p-2 lg:p-6">
+        <div className="w-12 h-9 sm:h-12 rounded-full bg-primary flex items-center justify-center">
           <IconComponent className="w-6 h-6 text-primary-foreground" />
         </div>
         <div>
@@ -24,9 +24,9 @@ export const AchievementCard = ({
           <p className="text-sm text-dark-gold dark:text-light-gold">{school_name}</p>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between items-center mb-2">
-          <Badge className="dark:bg-light-blue dark:text-light-gold">{badge}</Badge>
+      <CardContent className="p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2 gap-2">
+          <Badge className="dark:bg-light-blue dark:text-light-gold w-fit">{badge}</Badge>
           <span className="text-sm text-dark-gold dark:text-light-gold">{end_date}</span>
         </div>
         {relevant_topics.map((topic) => (
