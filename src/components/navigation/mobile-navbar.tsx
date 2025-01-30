@@ -1,4 +1,4 @@
-import { Menu } from 'lucide-react';
+import { Menu, StickyNote } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -7,8 +7,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../ui/sheet';
-import Link from 'next/link';
-import { ModeToggle } from '../mode-toggle';
+
+import { ModeToggle } from '../theme/mode-toggle';
+import { CustomButton } from '../custom-button';
 
 export const MobileNavbar = () => {
   return (
@@ -22,16 +23,11 @@ export const MobileNavbar = () => {
         </div>
       </SheetTrigger>
       <SheetOverlay className="md:hidden" />
-      <SheetContent className="md:hidden bg-blue-200 dark:bg-dark-blue">
+      <SheetContent className="md:hidden bg-white dark:bg-dark-blue">
         <SheetHeader>
-          <SheetTitle>ALSE</SheetTitle>
-          <Link
-            className="py-1.5 px-3 m-1 text-center bg-blue-200 border border-slate-800 rounded-md text-light-blue hover:bg-blue-300 dark:hover:bg-gray-600 dark:text-gray-300 dark:bg-gray-700"
-            href="/blog"
-          >
-            Blog
-          </Link>
-          <ModeToggle className="w-full !mt-10" />
+          <SheetTitle className="text-blue-500 dark:text-light-green">ALSE</SheetTitle>
+          <CustomButton buttonText="Blog" linkUrl="/blog" variant="default" icon={<StickyNote />} />
+          <ModeToggle />
         </SheetHeader>
       </SheetContent>
     </Sheet>
