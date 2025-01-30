@@ -8,7 +8,7 @@ interface Props {
 export const EducationTimeline = ({ educations }: Props) => {
   return (
     <div className="container md:px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12 text-light-green">
+      <h2 className="text-3xl font-bold text-center mb-12 text-blue-500 dark:text-light-green">
         My Educational Journey
       </h2>
       <div className="space-y-8 px-3">
