@@ -1,10 +1,9 @@
 import { EducationTimeline } from '@/components/education/timeline';
 import { Footer } from '@/components/footer';
-import { MainInfo } from '@/components/main-info';
-import { Navbar } from '@/components/navigation/navbar';
+import { Presentation } from '@/components/user-info/presentation';
 import { JobsSection } from '@/components/professional-experience/jobs-section';
 import { SkillsSection } from '@/components/skills-showcase/skills-section';
-import { SocialMediaInfo } from '@/components/social-media';
+import { SocialMediaInfo } from '@/components/user-info/social-media';
 import { Profile } from '@/interfaces/profile';
 
 const getProfile = async (): Promise<Profile> => {
@@ -19,10 +18,9 @@ export default async function Home() {
   const profile = await getProfile();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-200 dark:from-dark-blue from-80% to-95% to-teal-100 dark:to-light-blue">
-      <Navbar />
+    <>
       <main className="flex flex-col gap-8 items-start md:p-16 max-w-6xl">
-        <MainInfo
+        <Presentation
           firstname={profile.name}
           lastName={profile.last_name}
           imageUrl={profile.image_url}
@@ -38,6 +36,6 @@ export default async function Home() {
         <EducationTimeline educations={profile.education} />
       </main>
       <Footer socialMedia={profile.social_media} />
-    </div>
+    </>
   );
 }
