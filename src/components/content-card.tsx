@@ -33,7 +33,6 @@ export function ContentCard({
   mainCta,
   secondaryCta,
 }: Props) {
-  console.log(imageUrl);
   return (
     <Card className="overflow-hidden flex flex-col justify-between dark:bg-dark-blue">
       <div className="relative h-48 w-full">

@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const { posts } = await getPosts();
 
   return (
-    <div className="w-full px-3 md:p-6 mt-10 max-w-6xl">
+    <div className="w-full px-3 md:p-6 my-10 max-w-6xl">
       <h1 className="text-3xl font-bold text-center text-blue-500 dark:text-light-green">
         Things that have helped me!
       </h1>

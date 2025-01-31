@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 
 import './globals.css';
+import '@mdxeditor/editor/style.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
