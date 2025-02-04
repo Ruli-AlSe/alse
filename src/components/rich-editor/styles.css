@@ -171,4 +171,31 @@
       border-top: 1px solid #6d28d9;
     }
   }
+
+  /* highlight */
+  mark {
+    border-radius: 0.4rem;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+  }
+
+  a {
+    color: #041520;
+    cursor: pointer;
+
+    &:hover {
+      color: #002b6b;
+    }
+  }
+}
+
+.dark .tiptap {
+  a {
+    color: #facc15;
+    cursor: pointer;
+
+    &:hover {
+      color: #ffd700;
+    }
+  }
 }
