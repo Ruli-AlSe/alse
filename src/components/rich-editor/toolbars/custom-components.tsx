@@ -1,9 +1,10 @@
 import { JSX, useState } from 'react';
-import { Check, Heading1, Heading2, Heading3, ImagePlus } from 'lucide-react';
+import { Check, Heading1, Heading2, Heading3, ImagePlus, Link } from 'lucide-react';
 import { Editor } from '@tiptap/react';
-import { TooltipWrapperProps } from '@/interfaces/rich-text-editor';
+import { BsYoutube } from 'react-icons/bs';
+import { DialogWrapperProps, TooltipWrapperProps } from '@/interfaces/rich-text-editor';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 import {
   Dialog,
   DialogContent,
@@ -11,14 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Label } from '../ui/label';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Badge } from '../ui/badge';
-import { CustomButton } from '../custom-button';
+} from '../../ui/dialog';
+import { Label } from '../../ui/label';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Badge } from '../../ui/badge';
+import { CustomButton } from '../../custom-button';
 import { useToast } from '@/hooks/use-toast';
-import { BsYoutube } from 'react-icons/bs';
 
 export const TooltipWrapper = ({ tooltipContent, element }: TooltipWrapperProps) => {
   return (
@@ -74,6 +74,30 @@ export const HeadingButtons = ({ editor }: { editor: Editor }) => {
   );
 };
 
+export const DialogWrapper = ({
+  openModal,
+  triggerElement,
+  dialogTitle,
+  content,
+  footer,
+  openChange,
+}: DialogWrapperProps) => {
+  return (
+    <Dialog open={openModal} onOpenChange={openChange}>
+      <DialogTrigger asChild>{triggerElement}</DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+        </DialogHeader>
+        {content}
+        <DialogFooter className="w-full flex flex-col md:flex-row justify-between gap-5">
+          {footer}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [imageWidth, setImageWidth] = useState<number>(320);
@@ -107,8 +131,11 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
   };
 
   return (
-    <Dialog open={imageModal} onOpenChange={setImageModal}>
-      <DialogTrigger asChild>
+    <DialogWrapper
+      openModal={imageModal}
+      openChange={setImageModal}
+      dialogTitle="Paste the image URL"
+      triggerElement={
         <TooltipWrapper
           tooltipContent="Insert image"
           element={
@@ -121,11 +148,8 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
             </Badge>
           }
         />
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Paste the image URL</DialogTitle>
-        </DialogHeader>
+      }
+      content={
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
@@ -138,7 +162,9 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
             <Check />
           </Button>
         </div>
-        <DialogFooter className="w-full flex flex-col md:flex-row justify-between gap-5">
+      }
+      footer={
+        <>
           <div className="w-full md:w-1/2">
             Image width
             <span className="flex gap-2 items-center mt-3">
@@ -163,9 +189,9 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
               px
             </span>
           </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    />
   );
 };
 
@@ -178,7 +204,7 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
   const urlPattern =
     /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
-  const addImage = () => {
+  const addVideo = () => {
     if (!videoUrl) {
       return;
     }
@@ -201,8 +227,11 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
   };
 
   return (
-    <Dialog open={showModal} onOpenChange={setShowModal}>
-      <DialogTrigger asChild>
+    <DialogWrapper
+      openModal={showModal}
+      openChange={setShowModal}
+      dialogTitle="Paste the video URL"
+      triggerElement={
         <TooltipWrapper
           tooltipContent="Insert YouTube video"
           element={
@@ -215,11 +244,8 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
             </Badge>
           }
         />
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Paste the video URL</DialogTitle>
-        </DialogHeader>
+      }
+      content={
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
@@ -227,12 +253,14 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
             </Label>
             <Input id="link" type="url" onChange={(event) => setVideoUrl(event.target.value)} />
           </div>
-          <Button type="submit" onClick={() => addImage()} size="sm" className="px-3">
+          <Button type="submit" onClick={() => addVideo()} size="sm" className="px-3">
             <span className="sr-only">Insert</span>
             <Check />
           </Button>
         </div>
-        <DialogFooter className="w-full flex flex-col md:flex-row justify-between gap-5">
+      }
+      footer={
+        <>
           <div className="w-full md:w-1/2">
             Width
             <span className="flex gap-2 items-center mt-3">
@@ -257,8 +285,90 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
               px
             </span>
           </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    />
+  );
+};
+
+export const InsertLinkDialog = ({ editor }: { editor: Editor }) => {
+  const [url, setUrl] = useState<string | undefined>(undefined);
+  const [showModal, setShowModal] = useState(false);
+  const { toast } = useToast();
+
+  const onClickTrigger = () => {
+    const previousUrl = editor.getAttributes('link').href;
+    console.log('*********', previousUrl);
+    setUrl(previousUrl);
+    setShowModal(true);
+  };
+
+  const setLink = () => {
+    setShowModal(false);
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+
+      return;
+    }
+
+    // cancelled
+    if (!url) {
+      return;
+    }
+
+    // update link
+    try {
+      editor.chain().focus().setLink({ href: url }).run();
+
+      setUrl(undefined);
+    } catch (error: unknown) {
+      console.error(JSON.stringify(error));
+      setShowModal(false);
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Please enter a valid URL with HTPPS protocol.',
+      });
+    }
+  };
+
+  return (
+    <DialogWrapper
+      openModal={showModal}
+      openChange={setShowModal}
+      dialogTitle="Paste the link URL"
+      triggerElement={
+        <TooltipWrapper
+          tooltipContent="Insert link url"
+          element={
+            <Badge onClick={onClickTrigger} variant="default" className="rounded-md px-3 p-2 h-7">
+              <Link className="w-5 h-5" />
+            </Badge>
+          }
+        />
+      }
+      content={
+        <div className="flex items-center space-x-2">
+          <div className="grid flex-1 gap-2">
+            <Label htmlFor="link" className="sr-only">
+              Link
+            </Label>
+            <Input
+              id="link"
+              type="url"
+              defaultValue={url}
+              onChange={(event) => setUrl(event.target.value)}
+            />
+          </div>
+          <Button type="submit" onClick={setLink} size="sm" className="px-3">
+            <span className="sr-only">Insert</span>
+            <Check />
+          </Button>
+        </div>
+      }
+      footer={<></>}
+    />
   );
 };
