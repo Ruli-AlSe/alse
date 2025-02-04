@@ -15,7 +15,12 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { HeadingButtons, InsertImageDialog, TooltipWrapper } from './toolbar-components';
+import {
+  HeadingButtons,
+  InsertImageDialog,
+  InsertYoutubeDialog,
+  TooltipWrapper,
+} from './toolbar-components';
 import { BsBlockquoteLeft } from 'react-icons/bs';
 import { CustomButton } from '../custom-button';
 
@@ -124,6 +129,7 @@ export function EditorToolbar({ onFormatClick, editor }: EditorToolbarProps) {
             />
           }
         /> */}
+        <InsertYoutubeDialog editor={editor} />
         <Button variant="outline" size="icon" onClick={() => onFormatClick('bold')}>
           <Bold className="h-4 w-4" />
         </Button>

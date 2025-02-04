@@ -3,6 +3,7 @@
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import Youtube from '@tiptap/extension-youtube';
 
 import './styles.css';
 import { EditorToolbar } from './toolbar';
@@ -18,6 +19,9 @@ const Tiptap = ({ content }: { content: string }) => {
       StarterKit,
       CodeBlockLowlight.configure({
         lowlight,
+      }),
+      Youtube.configure({
+        nocookie: true,
       }),
     ],
     content,

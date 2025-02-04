@@ -18,6 +18,7 @@ import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
 import { CustomButton } from '../custom-button';
 import { useToast } from '@/hooks/use-toast';
+import { BsYoutube } from 'react-icons/bs';
 
 export const TooltipWrapper = ({ tooltipContent, element }: TooltipWrapperProps) => {
   return (
@@ -158,6 +159,100 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
                 defaultValue={imageHeight}
                 className=" inline"
                 onChange={(event) => setImageHeight(+event.target.value)}
+              />
+              px
+            </span>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
+  const [videoUrl, setVideoUrl] = useState<string | undefined>(undefined);
+  const [height, setHeight] = useState(480);
+  const [width, setWidth] = useState(640);
+  const [showModal, setShowModal] = useState(false);
+  const { toast } = useToast();
+  const urlPattern =
+    /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+
+  const addImage = () => {
+    if (!videoUrl) {
+      return;
+    }
+
+    if (urlPattern.test(videoUrl)) {
+      editor.commands.setYoutubeVideo({
+        src: videoUrl,
+        width: Math.max(320, width) || 640,
+        height: Math.max(180, height) || 480,
+      });
+
+      setShowModal(false);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Please enter a valid URL with HTPPS protocol.',
+      });
+    }
+  };
+
+  return (
+    <Dialog open={showModal} onOpenChange={setShowModal}>
+      <DialogTrigger asChild>
+        <TooltipWrapper
+          tooltipContent="Insert YouTube video"
+          element={
+            <Badge
+              onClick={() => setShowModal(true)}
+              variant="default"
+              className="rounded-md px-3 p-2 h-7"
+            >
+              <BsYoutube className="w-5 h-5" />
+            </Badge>
+          }
+        />
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Paste the video URL</DialogTitle>
+        </DialogHeader>
+        <div className="flex items-center space-x-2">
+          <div className="grid flex-1 gap-2">
+            <Label htmlFor="link" className="sr-only">
+              Link
+            </Label>
+            <Input id="link" type="url" onChange={(event) => setVideoUrl(event.target.value)} />
+          </div>
+          <Button type="submit" onClick={() => addImage()} size="sm" className="px-3">
+            <span className="sr-only">Insert</span>
+            <Check />
+          </Button>
+        </div>
+        <DialogFooter className="w-full flex flex-col md:flex-row justify-between gap-5">
+          <div className="w-full md:w-1/2">
+            Width
+            <span className="flex gap-2 items-center mt-3">
+              <Input
+                type="number"
+                size={50}
+                defaultValue={width}
+                onChange={(event) => setWidth(+event.target.value)}
+              />
+              px
+            </span>
+          </div>
+          <div className="w-full md:w-1/2">
+            Height
+            <span className="flex gap-2 items-center mt-3">
+              <Input
+                type="number"
+                defaultValue={height}
+                className=" inline"
+                onChange={(event) => setHeight(+event.target.value)}
               />
               px
             </span>
