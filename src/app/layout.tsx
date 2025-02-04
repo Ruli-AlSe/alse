@@ -5,7 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 
 import './globals.css';
-import '@mdxeditor/editor/style.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

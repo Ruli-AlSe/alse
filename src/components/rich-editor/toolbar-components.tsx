@@ -4,7 +4,14 @@ import { Editor } from '@tiptap/react';
 import { TooltipWrapperProps } from '@/interfaces/rich-text-editor';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -68,6 +75,8 @@ export const HeadingButtons = ({ editor }: { editor: Editor }) => {
 
 export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+  const [imageWidth, setImageWidth] = useState<number>(320);
+  const [imageHeight, setImageHeight] = useState<number>(320);
   const [imageModal, setImageModal] = useState(false);
   const { toast } = useToast();
   const urlPattern =
@@ -79,7 +88,12 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
     }
 
     if (urlPattern.test(imageUrl)) {
-      editor.chain().focus().setImage({ src: imageUrl }).run();
+      editor
+        .chain()
+        .focus()
+        // @ts-expect-error Let's ignore this compile error because this function accepts all variables
+        .setImage({ src: imageUrl, width: `${imageWidth}px`, height: `${imageHeight}px` })
+        .run();
       editor.setOptions();
       setImageModal(false);
     } else {
@@ -123,6 +137,32 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
             <Check />
           </Button>
         </div>
+        <DialogFooter className="w-full flex flex-col md:flex-row justify-between gap-5">
+          <div className="w-full md:w-1/2">
+            Image width
+            <span className="flex gap-2 items-center mt-3">
+              <Input
+                type="number"
+                size={50}
+                defaultValue={imageWidth}
+                onChange={(event) => setImageWidth(+event.target.value)}
+              />
+              px
+            </span>
+          </div>
+          <div className="w-full md:w-1/2">
+            Image height
+            <span className="flex gap-2 items-center mt-3">
+              <Input
+                type="number"
+                defaultValue={imageHeight}
+                className=" inline"
+                onChange={(event) => setImageHeight(+event.target.value)}
+              />
+              px
+            </span>
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
