@@ -111,7 +111,7 @@ export function EditorToolbar({ onFormatClick, editor }: EditorToolbarProps) {
           }
         />
         <InsertImageDialog editor={editor} />
-        <TooltipWrapper
+        {/* <TooltipWrapper
           tooltipContent="Edit image size"
           element={
             <CustomButton
@@ -123,7 +123,7 @@ export function EditorToolbar({ onFormatClick, editor }: EditorToolbarProps) {
               disabled={!editor.isActive('image')}
             />
           }
-        />
+        /> */}
         <Button variant="outline" size="icon" onClick={() => onFormatClick('bold')}>
           <Bold className="h-4 w-4" />
         </Button>
