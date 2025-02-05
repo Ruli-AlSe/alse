@@ -13,7 +13,7 @@ export default {
         dark: {
           blue: '#041520',
           green: '#0c3e1d',
-          gold: '#b8a70b',
+          gold: '#facc15',
         },
         light: {
           blue: '#002b6b',

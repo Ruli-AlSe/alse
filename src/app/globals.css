@@ -71,3 +71,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+div:focus-visible {
+  outline: 0 !important;
+}

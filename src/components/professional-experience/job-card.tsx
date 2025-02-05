@@ -14,14 +14,14 @@ export const JobCard = ({ job }: { job: Job }) => {
       <CardHeader>
         <div className="flex flex-col md:flex-row justify-between items-start">
           <div>
-            <CardTitle className="text-2xl font-bold text-light-green">
+            <CardTitle className="text-2xl font-bold text-blue-500 dark:text-light-green">
               {job.company_name}
             </CardTitle>
-            <CardDescription className="text-lg text-dark-gold dark:text-light-gold">
+            <CardDescription className="text-lg text-light-blue dark:text-light-gold">
               {job.title}
             </CardDescription>
           </div>
-          <div className="flex items-center text-sm text-dark-gold dark:text-light-gold">
+          <div className="flex items-center text-sm text-light-blue dark:text-light-gold">
             <CalendarDays className="mr-1 h-4 w-4" />
             {formatDate(job.start_date)} - {job.end_date ? formatDate(job.end_date) : 'Present'}
           </div>
