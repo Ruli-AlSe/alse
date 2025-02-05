@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import { ChangeEvent, JSX } from 'react';
 
 export interface TooltipWrapperProps {
   tooltipContent: string;
@@ -12,4 +12,21 @@ export interface DialogWrapperProps {
   triggerElement: JSX.Element;
   content: JSX.Element;
   footer: JSX.Element;
+}
+
+export interface LinkInputProps {
+  label: string;
+  buttonText: string;
+  onChangeAction: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClickAction: () => void;
+  icon: JSX.Element;
+}
+
+export interface WidthHeightControlsProps {
+  widthLabel: string;
+  heightLabel: string;
+  defaultWidth: number;
+  defaultHeight: number;
+  onChangeWidthAction: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeHeightAction: (event: ChangeEvent<HTMLInputElement>) => void;
 }

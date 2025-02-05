@@ -2,7 +2,12 @@ import { JSX, useState } from 'react';
 import { Check, Heading1, Heading2, Heading3, ImagePlus, Link } from 'lucide-react';
 import { Editor } from '@tiptap/react';
 import { BsYoutube } from 'react-icons/bs';
-import { DialogWrapperProps, TooltipWrapperProps } from '@/interfaces/rich-text-editor';
+import {
+  DialogWrapperProps,
+  LinkInputProps,
+  TooltipWrapperProps,
+  WidthHeightControlsProps,
+} from '@/interfaces/rich-text-editor';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 import {
@@ -19,6 +24,10 @@ import { Input } from '../../ui/input';
 import { Badge } from '../../ui/badge';
 import { CustomButton } from '../../custom-button';
 import { useToast } from '@/hooks/use-toast';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+
+const urlPattern =
+  /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
 export const TooltipWrapper = ({ tooltipContent, element }: TooltipWrapperProps) => {
   return (
@@ -98,14 +107,73 @@ export const DialogWrapper = ({
   );
 };
 
+export const LinkInput = ({
+  label,
+  icon,
+  buttonText,
+  onChangeAction,
+  onClickAction,
+}: LinkInputProps) => {
+  return (
+    <div className="flex items-center space-x-2">
+      <div className="grid flex-1 gap-2">
+        <Label htmlFor="link" className="sr-only">
+          {label}
+        </Label>
+        <Input id="link" type="url" onChange={onChangeAction} />
+      </div>
+      <Button type="submit" onClick={onClickAction} size="sm" className="px-3">
+        <span className="sr-only">{buttonText}</span>
+        {icon}
+      </Button>
+    </div>
+  );
+};
+
+export const WidthHeightControls = ({
+  widthLabel,
+  heightLabel,
+  defaultWidth,
+  defaultHeight,
+  onChangeWidthAction,
+  onChangeHeightAction,
+}: WidthHeightControlsProps) => {
+  return (
+    <>
+      <div className="w-full md:w-1/2">
+        {widthLabel}
+        <span className="flex gap-2 items-center mt-3">
+          <Input
+            type="number"
+            size={50}
+            defaultValue={defaultWidth}
+            onChange={onChangeWidthAction}
+          />
+          px
+        </span>
+      </div>
+      <div className="w-full md:w-1/2">
+        {heightLabel}
+        <span className="flex gap-2 items-center mt-3">
+          <Input
+            type="number"
+            defaultValue={defaultHeight}
+            className=" inline"
+            onChange={onChangeHeightAction}
+          />
+          px
+        </span>
+      </div>
+    </>
+  );
+};
+
 export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [imageWidth, setImageWidth] = useState<number>(320);
   const [imageHeight, setImageHeight] = useState<number>(320);
   const [imageModal, setImageModal] = useState(false);
   const { toast } = useToast();
-  const urlPattern =
-    /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
   const addImage = () => {
     if (!imageUrl) {
@@ -113,11 +181,18 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
     }
 
     if (urlPattern.test(imageUrl)) {
+      const validWidth = Math.max(320, imageWidth) || 320;
+      const validHeight = Math.max(320, imageHeight) || 320;
+
       editor
         .chain()
         .focus()
-        // @ts-expect-error Let's ignore this compile error because this function accepts all variables
-        .setImage({ src: imageUrl, width: `${imageWidth}px`, height: `${imageHeight}px` })
+        .setImage({
+          src: imageUrl,
+          // @ts-expect-error Let's ignore this compile error because this function accepts all variables
+          width: `${validWidth}px`,
+          height: `${validHeight}px`,
+        })
         .run();
       editor.setOptions();
       setImageModal(false);
@@ -150,46 +225,23 @@ export const InsertImageDialog = ({ editor }: { editor: Editor }) => {
         />
       }
       content={
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input id="link" type="url" onChange={(event) => setImageUrl(event.target.value)} />
-          </div>
-          <Button type="submit" onClick={() => addImage()} size="sm" className="px-3">
-            <span className="sr-only">Insert</span>
-            <Check />
-          </Button>
-        </div>
+        <LinkInput
+          label="Link"
+          buttonText="Insert"
+          icon={<Check />}
+          onClickAction={addImage}
+          onChangeAction={(event) => setImageUrl(event.target.value)}
+        />
       }
       footer={
-        <>
-          <div className="w-full md:w-1/2">
-            Image width
-            <span className="flex gap-2 items-center mt-3">
-              <Input
-                type="number"
-                size={50}
-                defaultValue={imageWidth}
-                onChange={(event) => setImageWidth(+event.target.value)}
-              />
-              px
-            </span>
-          </div>
-          <div className="w-full md:w-1/2">
-            Image height
-            <span className="flex gap-2 items-center mt-3">
-              <Input
-                type="number"
-                defaultValue={imageHeight}
-                className=" inline"
-                onChange={(event) => setImageHeight(+event.target.value)}
-              />
-              px
-            </span>
-          </div>
-        </>
+        <WidthHeightControls
+          widthLabel="Image width"
+          heightLabel="Image height"
+          defaultWidth={imageWidth}
+          defaultHeight={imageHeight}
+          onChangeWidthAction={(event) => setImageWidth(+event.target.value)}
+          onChangeHeightAction={(event) => setImageHeight(+event.target.value)}
+        />
       }
     />
   );
@@ -201,8 +253,6 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
   const [width, setWidth] = useState(640);
   const [showModal, setShowModal] = useState(false);
   const { toast } = useToast();
-  const urlPattern =
-    /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
   const addVideo = () => {
     if (!videoUrl) {
@@ -246,46 +296,23 @@ export const InsertYoutubeDialog = ({ editor }: { editor: Editor }) => {
         />
       }
       content={
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input id="link" type="url" onChange={(event) => setVideoUrl(event.target.value)} />
-          </div>
-          <Button type="submit" onClick={() => addVideo()} size="sm" className="px-3">
-            <span className="sr-only">Insert</span>
-            <Check />
-          </Button>
-        </div>
+        <LinkInput
+          label="Video URL"
+          buttonText="Insert"
+          icon={<Check />}
+          onClickAction={addVideo}
+          onChangeAction={(event) => setVideoUrl(event.target.value)}
+        />
       }
       footer={
-        <>
-          <div className="w-full md:w-1/2">
-            Width
-            <span className="flex gap-2 items-center mt-3">
-              <Input
-                type="number"
-                size={50}
-                defaultValue={width}
-                onChange={(event) => setWidth(+event.target.value)}
-              />
-              px
-            </span>
-          </div>
-          <div className="w-full md:w-1/2">
-            Height
-            <span className="flex gap-2 items-center mt-3">
-              <Input
-                type="number"
-                defaultValue={height}
-                className=" inline"
-                onChange={(event) => setHeight(+event.target.value)}
-              />
-              px
-            </span>
-          </div>
-        </>
+        <WidthHeightControls
+          widthLabel="Video width"
+          heightLabel="Video height"
+          defaultWidth={width}
+          defaultHeight={height}
+          onChangeWidthAction={(event) => setWidth(+event.target.value)}
+          onChangeHeightAction={(event) => setHeight(+event.target.value)}
+        />
       }
     />
   );
@@ -298,7 +325,6 @@ export const InsertLinkDialog = ({ editor }: { editor: Editor }) => {
 
   const onClickTrigger = () => {
     const previousUrl = editor.getAttributes('link').href;
-    console.log('*********', previousUrl);
     setUrl(previousUrl);
     setShowModal(true);
   };
@@ -350,25 +376,93 @@ export const InsertLinkDialog = ({ editor }: { editor: Editor }) => {
         />
       }
       content={
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              type="url"
-              defaultValue={url}
-              onChange={(event) => setUrl(event.target.value)}
-            />
-          </div>
-          <Button type="submit" onClick={setLink} size="sm" className="px-3">
-            <span className="sr-only">Insert</span>
-            <Check />
-          </Button>
-        </div>
+        <LinkInput
+          label="Link"
+          buttonText="Insert"
+          icon={<Check />}
+          onClickAction={setLink}
+          onChangeAction={(event) => setUrl(event.target.value)}
+        />
       }
       footer={<></>}
     />
+  );
+};
+
+export const InsertTableDialog = ({ editor }: { editor: Editor }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Badge
+          onClick={() => setOpen(true)}
+          variant="default"
+          className="cursor-pointer rounded-md px-3 p-2 h-7"
+        >
+          Table resources
+        </Badge>
+      </PopoverTrigger>
+      <PopoverContent className="w-full grid grid-cols-2 md:grid-cols-3 items-center gap-2">
+        <CustomButton
+          buttonAsBadge
+          buttonText="Insert table"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() =>
+            editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+          }
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Delete table"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().deleteTable().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Add column after"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().addColumnAfter().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Delete column"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().deleteColumn().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Add row after"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().addRowAfter().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Delete row"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().deleteRow().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Merge or split cells"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().mergeOrSplit().run()}
+        />
+        <CustomButton
+          buttonAsBadge
+          buttonText="Toggle header cell"
+          extraClasses="p-2 h-7"
+          icon={<></>}
+          action={() => editor.chain().focus().toggleHeaderCell().run()}
+        />
+      </PopoverContent>
+    </Popover>
   );
 };

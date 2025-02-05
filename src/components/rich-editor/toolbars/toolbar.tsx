@@ -1,24 +1,67 @@
 import { useState, useEffect } from 'react';
 import { Editor } from '@tiptap/react';
-import { Underline, AlignLeft, AlignCenter, AlignRight, SeparatorHorizontal } from 'lucide-react';
+import {
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  SeparatorHorizontal,
+  AlignJustify,
+} from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { InsertImageDialog, InsertYoutubeDialog, TooltipWrapper } from './custom-components';
+import {
+  InsertImageDialog,
+  InsertTableDialog,
+  InsertYoutubeDialog,
+  TooltipWrapper,
+} from './custom-components';
 import { BsBlockquoteLeft } from 'react-icons/bs';
 import { CustomButton } from '../../custom-button';
 
 interface EditorToolbarProps {
-  onFormatClick: (format: string) => void;
   editor: Editor;
 }
 
-export function EditorToolbar({ onFormatClick, editor }: EditorToolbarProps) {
+export function EditorToolbar({ editor }: EditorToolbarProps) {
   const [isSticky, setIsSticky] = useState(false);
+  const buttons = [
+    {
+      tooltipContent: 'Block quote',
+      icon: <BsBlockquoteLeft className="h-5 w-5" />,
+      action: () => editor.chain().focus().toggleBlockquote().run(),
+    },
+    {
+      tooltipContent: 'Horizontal separator',
+      icon: <SeparatorHorizontal />,
+      action: () => editor.chain().focus().setHorizontalRule().run(),
+    },
+    {
+      tooltipContent: 'Align left',
+      icon: <AlignLeft className="h-4 w-4" />,
+      action: () => editor.chain().focus().setTextAlign('left').run(),
+    },
+    {
+      tooltipContent: 'Align center',
+      icon: <AlignCenter className="h-4 w-4" />,
+      action: () => editor.chain().focus().setTextAlign('center').run(),
+    },
+    {
+      tooltipContent: 'Align right',
+      icon: <AlignRight className="h-4 w-4" />,
+      action: () => editor.chain().focus().setTextAlign('right').run(),
+    },
+    {
+      tooltipContent: 'Justify',
+      icon: <AlignJustify className="h-4 w-4" />,
+      action: () => editor.chain().focus().setTextAlign('justify').run(),
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      setIsSticky(offset > 100);
+      const editor = document.getElementById('content-editor');
+      const editorYPosition = editor?.getClientRects()[0].y || 1000;
+
+      setIsSticky(editorYPosition - 100 < 0);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -35,44 +78,24 @@ export function EditorToolbar({ onFormatClick, editor }: EditorToolbarProps) {
       }`}
     >
       <div className="container mx-auto flex flex-wrap gap-2 items-center">
-        <TooltipWrapper
-          tooltipContent="Block quote"
-          element={
-            <CustomButton
-              buttonText=""
-              extraClasses="p-2 h-7"
-              buttonAsBadge
-              icon={<BsBlockquoteLeft className="h-5 w-5" />}
-              action={() => editor.chain().focus().toggleBlockquote().run()}
-            />
-          }
-        />
-        <TooltipWrapper
-          tooltipContent="Horizontal separator"
-          element={
-            <CustomButton
-              buttonText=""
-              extraClasses="p-2 h-7"
-              buttonAsBadge
-              icon={<SeparatorHorizontal />}
-              action={() => editor.chain().focus().setHorizontalRule().run()}
-            />
-          }
-        />
+        {buttons.map(({ tooltipContent, icon, action }) => (
+          <TooltipWrapper
+            key={tooltipContent}
+            tooltipContent={tooltipContent}
+            element={
+              <CustomButton
+                buttonText=""
+                extraClasses="p-2 h-7"
+                buttonAsBadge
+                icon={icon}
+                action={action}
+              />
+            }
+          />
+        ))}
         <InsertImageDialog editor={editor} />
         <InsertYoutubeDialog editor={editor} />
-        <Button variant="outline" size="icon" onClick={() => onFormatClick('underline')}>
-          <Underline className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" size="icon" onClick={() => onFormatClick('alignLeft')}>
-          <AlignLeft className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" size="icon" onClick={() => onFormatClick('alignCenter')}>
-          <AlignCenter className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" size="icon" onClick={() => onFormatClick('alignRight')}>
-          <AlignRight className="h-4 w-4" />
-        </Button>
+        <InsertTableDialog editor={editor} />
       </div>
     </div>
   );

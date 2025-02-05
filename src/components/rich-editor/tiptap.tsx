@@ -6,6 +6,14 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import Youtube from '@tiptap/extension-youtube';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 
 import './styles.css';
 import { EditorToolbar } from './toolbars/toolbar';
@@ -13,16 +21,31 @@ import { CustomImage } from './extensions/custom-image-extension';
 import lowlight from './extensions/lowlight-config';
 import { FloatingToolbar } from './toolbars/floating-toolbar';
 import { BubbleToolbar } from './toolbars/bubble-toolbar';
-import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
+import { CustomButton } from '../custom-button';
+import { Save } from 'lucide-react';
 
-const Tiptap = ({ content }: { content: string }) => {
+const Tiptap = ({ content, editable = true }: { content: string; editable?: boolean }) => {
   const editor = useEditor({
     immediatelyRender: false,
-    editable: true,
+    editable,
     extensions: [
       CustomImage,
       Highlight,
       StarterKit,
+      Subscript,
+      Superscript,
+      Underline,
+      Table.configure({
+        resizable: true,
+        allowTableNodeSelection: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
       CodeBlockLowlight.configure({
         lowlight,
       }),
@@ -80,18 +103,33 @@ const Tiptap = ({ content }: { content: string }) => {
 
   return (
     <div className="w-full">
-      <EditorToolbar onFormatClick={() => {}} editor={editor} />
-      <FloatingToolbar editor={editor} />
-      <BubbleToolbar editor={editor} />
+      {editable && (
+        <>
+          <EditorToolbar editor={editor} />
+          <FloatingToolbar editor={editor} />
+          <BubbleToolbar editor={editor} />
+        </>
+      )}
 
       <EditorContent
-        className="p-3 min-h-[350px] border border-gray-500 focus-within:border-blue-600 focus-within:border-2"
+        id="content-editor"
+        className={cn('p-3 min-h-[350px] w-full overflow-x-scroll whitespace-nowrap mb-10', {
+          'border border-gray-500 focus-within:border-blue-600 focus-within:border-2 mb-2':
+            editable,
+        })}
         editor={editor}
       />
 
-      <Button variant="outline" size="icon" onClick={() => console.log(editor.getHTML())}>
-        save
-      </Button>
+      {editable && (
+        <div className="w-full flex justify-end">
+          <CustomButton
+            buttonText="Save article"
+            extraClasses="p-5 mb-10 mt-3"
+            icon={<Save />}
+            action={() => console.log(editor.getHTML())}
+          />
+        </div>
+      )}
     </div>
   );
 };
