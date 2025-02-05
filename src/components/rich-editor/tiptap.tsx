@@ -10,20 +10,20 @@ import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
-import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 
 import './styles.css';
 import { EditorToolbar } from './toolbars/toolbar';
-import { CustomImage } from './extensions/custom-image-extension';
+import { CustomImage } from './extensions/custom-image';
 import lowlight from './extensions/lowlight-config';
 import { FloatingToolbar } from './toolbars/floating-toolbar';
 import { BubbleToolbar } from './toolbars/bubble-toolbar';
 import { cn } from '@/lib/utils';
 import { CustomButton } from '../custom-button';
 import { Save } from 'lucide-react';
+import { CustomTable } from './extensions/custom-table';
 
 const Tiptap = ({ content, editable = true }: { content: string; editable?: boolean }) => {
   const editor = useEditor({
@@ -36,7 +36,7 @@ const Tiptap = ({ content, editable = true }: { content: string; editable?: bool
       Subscript,
       Superscript,
       Underline,
-      Table.configure({
+      CustomTable.configure({
         resizable: true,
         allowTableNodeSelection: true,
       }),
