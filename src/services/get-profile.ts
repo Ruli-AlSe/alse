@@ -1,3 +1,5 @@
+'use server';
+
 import { Profile } from '@/interfaces/profile';
 
 export const getProfile = async (): Promise<Profile> => {
