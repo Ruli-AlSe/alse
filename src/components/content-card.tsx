@@ -60,19 +60,22 @@ export function ContentCard({
       </div>
       <CardHeader className="space-y-3">
         {date && (
-          <CardDescription className="font-firaCode text-right text-dark-blue dark:text-white">
+          <CardDescription className="font-firaCode text-right text-light-blue dark:text-white">
             {formatDate(date, true)}
           </CardDescription>
         )}
         {categoryName && (
-          <Badge variant="default" className="font-firaCode w-fit mb-5">
+          <Badge
+            variant="default"
+            className="border border-blue-500 dark:border-light-gold bg-transparent text-light-blue dark:text-white font-firaCode w-fit mb-5"
+          >
             {categoryName}
           </Badge>
         )}
         <CardTitle className="font-montserrat text-xl md:text-2xl font-bold !leading-[1.5] text-blue-500 dark:text-light-green hover:opacity-80">
           {getCorrectTitle()}
         </CardTitle>
-        <CardDescription className="line-clamp-2 text-dark-blue dark:text-white">
+        <CardDescription className="line-clamp-3 md:line-clamp-2 text-dark-blue dark:text-white text-sm md:text-base">
           {description}
         </CardDescription>
       </CardHeader>

@@ -32,7 +32,7 @@ export const AchievementCard = ({
       </CardHeader>
       <CardContent className="p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2 gap-2">
-          <Badge className="font-firaCode dark:bg-light-blue dark:text-light-gold w-fit">
+          <Badge className="font-firaCode border border-blue-500 dark:border-light-gold bg-transparent text-light-blue dark:text-white w-fit">
             {badge}
           </Badge>
           <div>

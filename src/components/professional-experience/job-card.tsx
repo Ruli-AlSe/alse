@@ -53,8 +53,7 @@ export const JobCard = ({ job }: { job: Job }) => {
                 {skills.map((skill) => (
                   <Badge
                     key={skill.id}
-                    variant="secondary"
-                    className="font-firaCode flex justify-center items-center gap-3"
+                    className="border border-blue-500 dark:border-light-gold bg-transparent text-light-blue dark:text-white font-firaCode flex justify-center items-center gap-3 py-1"
                   >
                     <Image src={skill.icon_url} alt={skill.name} width={20} height={20} />
                     {skill.name}
