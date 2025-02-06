@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Card, CardContent } from '../ui/card';
+import SpotlightContent from '../animations/spotlight-content';
 
 interface Props {
   name: string;
@@ -9,13 +10,15 @@ interface Props {
 
 export const TechCard = ({ name, icon }: Props) => {
   return (
-    <Card className="w-full bg-white dark:bg-dark-blue shadow-sm hover:shadow-lg transition-shadow duration-300">
-      <CardContent className="p-3 md:p-6 flex flex-col items-center justify-center space-y-4">
-        <Image src={icon} className="text-sm" alt={name} width={60} height={60} />
-        <h3 className="font-firaCode text-xs lg:text-sm font-semibold text-center text-light-blue dark:text-light-gold">
-          {name}
-        </h3>
-      </CardContent>
-    </Card>
+    <SpotlightContent className="bg-white dark:bg-dark-blue p-0 py-5">
+      <Card className="bg-white dark:bg-dark-blue border-0 shadow-none">
+        <CardContent className="flex flex-col items-center justify-center space-y-4 p-0">
+          <Image src={icon} className="text-sm" alt={name} width={60} height={60} />
+          <h3 className="font-firaCode text-xs lg:text-sm font-semibold text-center text-light-blue dark:text-light-gold">
+            {name}
+          </h3>
+        </CardContent>
+      </Card>
+    </SpotlightContent>
   );
 };

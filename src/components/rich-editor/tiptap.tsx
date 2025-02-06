@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils';
 import { CustomButton } from '../custom-button';
 import { Save } from 'lucide-react';
 import { CustomTable } from './extensions/custom-table';
+import FadeContent from '../animations/fade-content';
 
 const Tiptap = ({ content, editable = true }: { content: string; editable?: boolean }) => {
   const editor = useEditor({
@@ -103,33 +104,35 @@ const Tiptap = ({ content, editable = true }: { content: string; editable?: bool
 
   return (
     <div className="w-full">
-      {editable && (
-        <>
-          <EditorToolbar editor={editor} />
-          <FloatingToolbar editor={editor} />
-          <BubbleToolbar editor={editor} />
-        </>
-      )}
+      <FadeContent direction="vertical" className="w-full">
+        {editable && (
+          <>
+            <EditorToolbar editor={editor} />
+            <FloatingToolbar editor={editor} />
+            <BubbleToolbar editor={editor} />
+          </>
+        )}
 
-      <EditorContent
-        id="content-editor"
-        className={cn('p-3 min-h-[350px] w-full overflow-x-scroll whitespace-nowrap mb-10', {
-          'border border-gray-500 focus-within:border-blue-600 focus-within:border-2 mb-2':
-            editable,
-        })}
-        editor={editor}
-      />
+        <EditorContent
+          id="content-editor"
+          className={cn('p-3 min-h-[350px] w-full overflow-x-scroll whitespace-nowrap mb-10', {
+            'border border-gray-500 focus-within:border-blue-600 focus-within:border-2 mb-2':
+              editable,
+          })}
+          editor={editor}
+        />
 
-      {editable && (
-        <div className="w-full flex justify-end">
-          <CustomButton
-            buttonText="Save article"
-            extraClasses="p-5 mb-10 mt-3"
-            icon={<Save />}
-            action={() => console.log(editor.getHTML())}
-          />
-        </div>
-      )}
+        {editable && (
+          <div className="w-full flex justify-end">
+            <CustomButton
+              buttonText="Save article"
+              extraClasses="p-5 mb-10 mt-3"
+              icon={<Save />}
+              action={() => console.log(editor.getHTML())}
+            />
+          </div>
+        )}
+      </FadeContent>
     </div>
   );
 };
