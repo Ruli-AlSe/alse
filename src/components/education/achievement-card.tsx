@@ -22,22 +22,26 @@ export const AchievementCard = ({
           <IconComponent className="w-6 h-6 text-primary-foreground" />
         </div>
         <div>
-          <CardTitle className="text-xl font-bold text-blue-500 dark:text-light-green">
+          <CardTitle className="font-poppins text-xl font-bold text-blue-500 dark:text-light-green">
             {career}
           </CardTitle>
-          <p className="text-sm text-light-blue dark:text-light-gold">{school_name}</p>
+          <p className="font-firaCode text-sm text-light-blue dark:text-light-gold">
+            {school_name}
+          </p>
         </div>
       </CardHeader>
       <CardContent className="p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2 gap-2">
-          <Badge className="dark:bg-light-blue dark:text-light-gold w-fit">{badge}</Badge>
+          <Badge className="font-firaCode dark:bg-light-blue dark:text-light-gold w-fit">
+            {badge}
+          </Badge>
           <div>
             {!is_course && (
-              <span className="text-sm text-light-blue dark:text-light-gold">
+              <span className="font-firaCode text-sm text-light-blue dark:text-light-gold">
                 {formatDate(start_date)} -{' '}
               </span>
             )}
-            <span className="text-sm text-light-blue dark:text-light-gold">
+            <span className="font-firaCode text-sm text-light-blue dark:text-light-gold">
               {formatDate(end_date)}
             </span>
           </div>

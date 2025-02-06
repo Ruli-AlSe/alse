@@ -12,7 +12,7 @@ export const TechCard = ({ name, icon }: Props) => {
     <Card className="w-full bg-white dark:bg-dark-blue shadow-sm hover:shadow-lg transition-shadow duration-300">
       <CardContent className="p-3 md:p-6 flex flex-col items-center justify-center space-y-4">
         <Image src={icon} className="text-sm" alt={name} width={60} height={60} />
-        <h3 className="text-xs lg:text-sm font-semibold text-center text-light-blue dark:text-light-gold">
+        <h3 className="font-firaCode text-xs lg:text-sm font-semibold text-center text-light-blue dark:text-light-gold">
           {name}
         </h3>
       </CardContent>

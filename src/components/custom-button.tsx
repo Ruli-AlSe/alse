@@ -42,7 +42,7 @@ export const CustomButton = ({
       <Badge
         variant={variant}
         onClick={action}
-        className={cn('h-9 rounded-md px-3', extraClasses, {
+        className={cn('font-firaCode h-9 rounded-md px-3', extraClasses, {
           'cursor-none pointer-events-none opacity-45': disabled,
         })}
       >
@@ -54,7 +54,13 @@ export const CustomButton = ({
 
   if (linkUrl) {
     return (
-      <Button variant={variant} size="sm" disabled={disabled} className={cn(extraClasses)} asChild>
+      <Button
+        variant={variant}
+        size="sm"
+        disabled={disabled}
+        className={cn('font-firaCode', extraClasses)}
+        asChild
+      >
         <Link
           href={linkUrl}
           target={openInNewTab ? '_blank' : '_self'}
@@ -73,7 +79,7 @@ export const CustomButton = ({
         variant={variant}
         size="sm"
         disabled={disabled}
-        className={cn(extraClasses)}
+        className={cn('font-firaCode', extraClasses)}
         onClick={action}
       >
         {buttonText}

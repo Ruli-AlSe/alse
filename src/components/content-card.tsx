@@ -11,9 +11,11 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn, formatDate } from '@/lib/utils';
+import Link from 'next/link';
 
 interface Props {
   title: string;
+  titleUrl?: string;
   description: string;
   date?: string;
   imageUrl?: string;
@@ -25,6 +27,7 @@ interface Props {
 
 export function ContentCard({
   title,
+  titleUrl,
   description,
   imageUrl,
   date,
@@ -33,6 +36,17 @@ export function ContentCard({
   mainCta,
   secondaryCta,
 }: Props) {
+  const getCorrectTitle = () => {
+    if (titleUrl) {
+      return (
+        <Link href={titleUrl} className="cursor-pointer">
+          {title}
+        </Link>
+      );
+    }
+    return title;
+  };
+
   return (
     <Card className="overflow-hidden flex flex-col justify-between dark:bg-dark-blue">
       <div className="relative h-48 w-full">
@@ -46,16 +60,18 @@ export function ContentCard({
       </div>
       <CardHeader className="space-y-3">
         {date && (
-          <CardDescription className="text-right text-dark-blue dark:text-white">
+          <CardDescription className="font-firaCode text-right text-dark-blue dark:text-white">
             {formatDate(date, true)}
           </CardDescription>
         )}
         {categoryName && (
-          <Badge variant="default" className="w-fit mb-5">
+          <Badge variant="default" className="font-firaCode w-fit mb-5">
             {categoryName}
           </Badge>
         )}
-        <CardTitle className="text-blue-500 dark:text-light-green text-xl">{title}</CardTitle>
+        <CardTitle className="font-montserrat text-xl md:text-2xl font-bold !leading-[1.5] text-blue-500 dark:text-light-green hover:opacity-80">
+          {getCorrectTitle()}
+        </CardTitle>
         <CardDescription className="line-clamp-2 text-dark-blue dark:text-white">
           {description}
         </CardDescription>
@@ -64,7 +80,7 @@ export function ContentCard({
         {technologies && (
           <div className="flex flex-wrap gap-2">
             {technologies.map((tech) => (
-              <Badge key={tech} variant="secondary">
+              <Badge key={tech} variant="secondary" className="font-firaCode">
                 {tech}
               </Badge>
             ))}

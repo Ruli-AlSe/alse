@@ -1,5 +1,5 @@
 import { SocialMediaInfo } from './user-info/social-media';
-import { getProfile } from '@/app/services/get-profile';
+import { getProfile } from '@/services/get-profile';
 
 export const Footer = async () => {
   const { social_media } = await getProfile();

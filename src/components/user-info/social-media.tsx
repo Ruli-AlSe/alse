@@ -45,7 +45,7 @@ export const SocialMediaInfo = ({ socialMedia, className }: Props) => {
           href={socialMedia[sm as keyof SocialMedia]!}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
+          className="font-firaCode flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
         >
           {getIcon(sm, 'w-6 h-6 text-blue-500 dark:text-light-gold')}
           <span>{sm.at(0)!.toUpperCase() + sm.slice(1)}</span>

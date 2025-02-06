@@ -19,15 +19,16 @@ export const Presentation = ({ firstname, lastName, imageUrl, headliner, bio }: 
         alt={`${firstname} photo`}
       />
       <div>
-        <h1 className="text-xl md:text-2xl font-bold">
+        <h1 className="font-montserrat text-2xl md:text-5xl font-bold !leading-[1.5]">
           Hi there 👋! My name is{' '}
-          <span className="text-blue-500 dark:text-light-green font-mono">
+          <span className="font-firaCode text-blue-500 dark:text-light-green">
             {firstname} {lastName}
           </span>{' '}
-          I&apos;m <span className="text-blue-500 dark:text-light-green">{headliner}</span>
+          I&apos;m{' '}
+          <span className="font-firaCode text-blue-500 dark:text-light-green">{headliner}</span>
         </h1>
-        <h4 className="md:text-lg font-bold my-6">A brief introduction about me...</h4>
-        <p className="md:text-lg text-justify">{bio}</p>
+        <h4 className="font-poppins text-lg font-bold my-9">A brief introduction about me...</h4>
+        <p className="--font-openSans md:text-lg text-justify">{bio}</p>
       </div>
     </section>
   );
