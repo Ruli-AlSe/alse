@@ -10,20 +10,21 @@ import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
-import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 
 import './styles.css';
 import { EditorToolbar } from './toolbars/toolbar';
-import { CustomImage } from './extensions/custom-image-extension';
+import { CustomImage } from './extensions/custom-image';
 import lowlight from './extensions/lowlight-config';
 import { FloatingToolbar } from './toolbars/floating-toolbar';
 import { BubbleToolbar } from './toolbars/bubble-toolbar';
 import { cn } from '@/lib/utils';
 import { CustomButton } from '../custom-button';
 import { Save } from 'lucide-react';
+import { CustomTable } from './extensions/custom-table';
+import FadeContent from '../animations/fade-content';
 
 const Tiptap = ({ content, editable = true }: { content: string; editable?: boolean }) => {
   const editor = useEditor({
@@ -36,7 +37,7 @@ const Tiptap = ({ content, editable = true }: { content: string; editable?: bool
       Subscript,
       Superscript,
       Underline,
-      Table.configure({
+      CustomTable.configure({
         resizable: true,
         allowTableNodeSelection: true,
       }),
@@ -103,33 +104,35 @@ const Tiptap = ({ content, editable = true }: { content: string; editable?: bool
 
   return (
     <div className="w-full">
-      {editable && (
-        <>
-          <EditorToolbar editor={editor} />
-          <FloatingToolbar editor={editor} />
-          <BubbleToolbar editor={editor} />
-        </>
-      )}
+      <FadeContent direction="vertical" className="w-full">
+        {editable && (
+          <>
+            <EditorToolbar editor={editor} />
+            <FloatingToolbar editor={editor} />
+            <BubbleToolbar editor={editor} />
+          </>
+        )}
 
-      <EditorContent
-        id="content-editor"
-        className={cn('p-3 min-h-[350px] w-full overflow-x-scroll whitespace-nowrap mb-10', {
-          'border border-gray-500 focus-within:border-blue-600 focus-within:border-2 mb-2':
-            editable,
-        })}
-        editor={editor}
-      />
+        <EditorContent
+          id="content-editor"
+          className={cn('p-3 min-h-[350px] w-full overflow-x-scroll whitespace-nowrap mb-10', {
+            'border border-gray-500 focus-within:border-blue-600 focus-within:border-2 mb-2':
+              editable,
+          })}
+          editor={editor}
+        />
 
-      {editable && (
-        <div className="w-full flex justify-end">
-          <CustomButton
-            buttonText="Save article"
-            extraClasses="p-5 mb-10 mt-3"
-            icon={<Save />}
-            action={() => console.log(editor.getHTML())}
-          />
-        </div>
-      )}
+        {editable && (
+          <div className="w-full flex justify-end">
+            <CustomButton
+              buttonText="Save article"
+              extraClasses="p-5 mb-10 mt-3"
+              icon={<Save />}
+              action={() => console.log(editor.getHTML())}
+            />
+          </div>
+        )}
+      </FadeContent>
     </div>
   );
 };

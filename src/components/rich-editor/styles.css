@@ -1,10 +1,12 @@
 .tiptap {
+  font-family: var(--font-openSans);
   :first-child {
     margin-top: 0;
   }
 
   blockquote {
-    border-left: 3px solid #605a574f;
+    font-family: var(--font-openSans);
+    border-left: 7px solid #3b82f6;
     margin: 1.5rem 0;
     padding-left: 1rem;
   }
@@ -15,6 +17,7 @@
     padding: 0 1rem;
     margin: 1.25rem 1rem 1.25rem 0.4rem;
     list-style: disc;
+    font-family: var(--font-poppins);
 
     li p {
       margin-top: 0.25em;
@@ -65,6 +68,7 @@
     /* Code styling */
     .hljs-comment,
     .hljs-quote {
+      font-style: italic;
       color: #616161;
     }
 
@@ -103,7 +107,7 @@
 
     .hljs-keyword,
     .hljs-selector-tag {
-      color: #70cff8;
+      color: #1095cd;
     }
 
     .hljs-emphasis {
@@ -122,9 +126,11 @@
   h4,
   h5,
   h6 {
+    font-family: var(--font-montserrat);
     line-height: 1.1;
     margin-top: 2.5rem;
     text-wrap: pretty;
+    color: #3b82f6;
   }
 
   h1,
@@ -134,17 +140,17 @@
   }
 
   h1 {
-    font-size: 1.6rem;
-    font-weight: 900;
-  }
-
-  h2 {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 700;
   }
 
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
   h3 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 600;
   }
 
@@ -163,12 +169,12 @@
   /* Horizontal separator */
   hr {
     border: none;
-    border-top: 1px solid #2e2b29;
+    border-top: 1px solid #002b6b;
     cursor: pointer;
     margin: 2rem 0;
 
     &.ProseMirror-selectednode {
-      border-top: 1px solid #6d28d9;
+      border-top: 1px solid #002b6b;
     }
   }
 
@@ -180,6 +186,7 @@
   }
 
   a {
+    font-family: var(--font-montserrat);
     color: #041520;
     cursor: pointer;
 
@@ -199,12 +206,13 @@
 
     td,
     th {
-      border: 1px solid #facc15;
+      border: 1px solid #a8890f;
       box-sizing: border-box;
       min-width: 1em;
       padding: 6px 8px;
       position: relative;
       vertical-align: top;
+      font-family: var(--font-montserrat);
 
       > * {
         margin-bottom: 0;
@@ -258,6 +266,21 @@
 }
 
 .dark .tiptap {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #1db550;
+  }
+  blockquote {
+    border-left: 7px solid #ffd700;
+  }
+  hr {
+    border-top: 1px solid #ffd700;
+  }
+
   a {
     color: #facc15;
     cursor: pointer;

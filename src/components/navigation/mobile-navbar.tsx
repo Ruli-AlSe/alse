@@ -25,7 +25,9 @@ export const MobileNavbar = () => {
       <SheetOverlay className="md:hidden" />
       <SheetContent className="md:hidden bg-white dark:bg-dark-blue">
         <SheetHeader>
-          <SheetTitle className="text-blue-500 dark:text-light-green">ALSE</SheetTitle>
+          <SheetTitle className="font-firaCode text-blue-500 dark:text-light-green">
+            AlSe
+          </SheetTitle>
           <CustomButton buttonText="Blog" linkUrl="/blog" variant="default" icon={<StickyNote />} />
           <ModeToggle />
         </SheetHeader>

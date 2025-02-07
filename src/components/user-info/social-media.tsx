@@ -9,6 +9,7 @@ import {
 
 import { SocialMedia } from '@/interfaces/profile';
 import { cn } from '@/lib/utils';
+import { BlurredLight } from '../blurred-light';
 
 interface Props {
   socialMedia: SocialMedia;
@@ -38,19 +39,20 @@ export const SocialMediaInfo = ({ socialMedia, className }: Props) => {
   };
 
   return (
-    <div className={cn('flex gap-4 flex-wrap px-5', className)}>
+    <div className={cn('relative flex gap-4 flex-wrap', className)}>
       {validSocialMedia.map((sm) => (
         <a
           key={sm}
           href={socialMedia[sm as keyof SocialMedia]!}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
+          className="font-firaCode flex flex-col gap-2 items-center hover:underline hover:underline-offset-4"
         >
           {getIcon(sm, 'w-6 h-6 text-blue-500 dark:text-light-gold')}
           <span>{sm.at(0)!.toUpperCase() + sm.slice(1)}</span>
         </a>
       ))}
+      <BlurredLight extraClasses="md:w-40 md:h-40 top-0 right-0 bg-blue-500 md:blur-[200px]" />
     </div>
   );
 };

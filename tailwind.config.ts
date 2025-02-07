@@ -9,6 +9,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        poppins: 'var(--font-poppins)',
+        montserrat: 'var(--font-montserrat)',
+        openSans: 'var(--font-openSans)',
+        firaCode: 'var(--font-fira-code)',
+      },
       colors: {
         dark: {
           blue: '#041520',

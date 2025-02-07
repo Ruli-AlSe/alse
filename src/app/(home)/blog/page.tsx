@@ -1,43 +1,58 @@
-import { ContentCard } from '@/components/content-card';
-import { CustomButton } from '@/components/custom-button';
-import { Blog } from '@/interfaces/blog';
 import { ArrowRight } from 'lucide-react';
 
-const getPosts = async (): Promise<Blog> => {
-  const api = process.env.API_URL;
-  const userEmail = process.env.USER_EMAIL;
-  const data: Blog = await fetch(`${api}/posts/${userEmail}`).then((res) => res.json());
-
-  return data;
-};
+import { ContentCard } from '@/components/content-card';
+import { CustomButton } from '@/components/custom-button';
+import { ErrorPage } from '@/components/error-section';
+import { NotFoundPage } from '@/components/not-found-section';
+import { getPosts } from '@/services/fetch-public';
+import FadeContent from '@/components/animations/fade-content';
 
 export default async function BlogPage() {
-  const { posts } = await getPosts();
+  try {
+    const posts = await getPosts();
 
-  return (
-    <div className="w-full px-3 md:p-6 my-10 max-w-6xl">
-      <h1 className="text-3xl font-bold text-center text-blue-500 dark:text-light-green">
-        Things that have helped me!
-      </h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 my-10">
-        {posts.map((post) => (
-          <ContentCard
-            key={post.id}
-            title={post.title}
-            description={post.short_description}
-            imageUrl={post.image_url}
-            date={post.updated_at}
-            categoryName={post.category_name}
-            mainCta={
-              <CustomButton
-                icon={<ArrowRight />}
-                buttonText="Read more"
-                linkUrl={`/blog/${post.slug}`}
-              />
-            }
-          />
-        ))}
-      </div>
-    </div>
-  );
+    if (!posts) {
+      return (
+        <NotFoundPage
+          message={`No posts found`}
+          suggestion="Please, try again later in case this is an error"
+        />
+      );
+    }
+
+    return (
+      <main className="relative flex flex-col gap-8 items-start md:p-16 max-w-6xl">
+        <h1 className="font-montserrat text-2xl md:text-5xl font-bold !leading-[1.5] text-center text-blue-500 dark:text-light-green">
+          Things that have helped me!
+        </h1>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 my-10">
+          {posts.map(
+            ({ id, title, short_description, image_url, updated_at, category_name, slug }) => (
+              <FadeContent key={id} direction="vertical" className="w-full">
+                <ContentCard
+                  title={title}
+                  titleUrl={`/blog/${slug}`}
+                  description={short_description}
+                  imageUrl={image_url}
+                  date={updated_at}
+                  categoryName={category_name}
+                  mainCta={
+                    <CustomButton
+                      icon={<ArrowRight />}
+                      buttonText="Read more"
+                      linkUrl={`/blog/${slug}`}
+                    />
+                  }
+                />
+              </FadeContent>
+            )
+          )}
+        </div>
+      </main>
+    );
+  } catch (error: unknown) {
+    console.error(JSON.stringify(error));
+
+    return <ErrorPage message="Failed to load blog posts" />;
+  }
 }
