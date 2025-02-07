@@ -25,7 +25,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     const { title, content, image_url, updated_at, category_name } = postContent;
 
     return (
-      <div className="w-full max-w-6xl flex flex-col mt-5 items-start md:items-center px-3">
+      <main className="w-full max-w-6xl flex flex-col mt-5 items-start md:items-center px-3">
         <FadeContent direction="horizontal" className="w-full" reverse>
           <h1 className="w-full font-montserrat text-2xl md:text-5xl font-bold !leading-[1.5] text-left dark:text-light-green text-blue-500 mt-8 mb-3">
             {title}
@@ -36,7 +36,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             width={512}
             height={512}
             alt={title}
-            className="object-cover w-full md:w-1/3 mb-10"
+            className="object-cover w-full md:w-1/3 mb-10 justify-self-center"
           />
           <div className="w-full font-firaCode flex justify-end text-sm md:text-xl mb-5 md:my-5 dark:text-light-gold text-light-blue">
             <span>Last updated: {formatDate(updated_at, true)}</span>
@@ -44,7 +44,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </FadeContent>
 
         <Tiptap content={content} editable={false} />
-      </div>
+      </main>
     );
   } catch (error: unknown) {
     console.error(JSON.stringify(error));

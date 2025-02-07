@@ -17,7 +17,7 @@ export const AchievementCard = ({
   const badge = is_course ? 'Specialization course' : 'Professional carreer';
 
   return (
-    <SpotlightContent className="bg-white dark:bg-dark-blue p-0 py-5">
+    <SpotlightContent className="bg-white dark:bg-dark-blue !p-0 py-5">
       <Card className="w-full border-0 bg-white dark:bg-dark-blue shadow-none">
         <CardHeader className="flex flex-row items-center space-x-2 sm:space-x-4 p-2 lg:p-6">
           <div className="w-12 h-9 sm:h-12 rounded-full bg-primary flex items-center justify-center">

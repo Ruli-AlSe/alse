@@ -13,8 +13,8 @@ export const JobCard = ({ job }: { job: Job }) => {
   const skills = job.skills;
 
   return (
-    <SpotlightContent className="bg-white dark:bg-dark-blue p-0 py-5">
-      <Card className="w-full dark:bg-dark-blue border-0 shadow-none">
+    <SpotlightContent className="bg-white dark:bg-dark-blue !p-0 py-5">
+      <Card className="w-full dark:bg-dark-blue border-0 shadow-none overflow-hidden">
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start">
             <div>

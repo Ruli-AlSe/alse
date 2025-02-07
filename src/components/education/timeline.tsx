@@ -9,9 +9,9 @@ interface Props {
 
 export const EducationTimeline = ({ educations }: Props) => {
   return (
-    <section className="container relative md:px-4 py-16">
+    <section className="container relative py-16">
       <FadeContent direction="vertical" className="w-full">
-        <BlurredLight extraClasses="w-40 h-40 top-1/2 right-1/2 bg-blue-500 blur-[200px]" />
+        <BlurredLight extraClasses="md:w-40 md:h-40 top-1/2 right-1/2 bg-blue-500 md:blur-[200px]" />
         <h2 className="font-montserrat text-2xl md:text-5xl font-bold !leading-[1.5] text-center mb-12 text-blue-500 dark:text-light-green">
           My Educational Journey
         </h2>

@@ -13,8 +13,8 @@ interface Props {
 
 export const Presentation = ({ firstname, lastName, imageUrl, headliner, bio }: Props) => {
   return (
-    <section className="w-full relative text-dark-blue dark:text-white rounded-lg flex flex-col items-center gap-4 md:flex-row py-7 px-3">
-      <BlurredLight extraClasses="w-60 h-60 top-6 left-0 bg-blue-500 blur-[300px]" />
+    <section className="w-full relative text-dark-blue dark:text-white rounded-lg flex flex-col items-center gap-4 md:flex-row py-7">
+      <BlurredLight extraClasses="md:w-60 md:h-60 top-6 left-0 bg-blue-500 md:blur-[300px]" />
       <FadeContent direction="horizontal" className="w-[200px] h-[200px]" reverse>
         <Image
           src={imageUrl ?? ''}
@@ -25,7 +25,7 @@ export const Presentation = ({ firstname, lastName, imageUrl, headliner, bio }: 
         />
       </FadeContent>
       <div>
-        <h1 className="font-montserrat text-2xl md:text-5xl font-bold !leading-[1.5]">
+        <h1 className="font-montserrat text-2xl md:text-3xl xl:text-5xl font-bold !leading-[1.5]">
           <SplitText text={'Hi there! My name is '} />
           <SplitText
             text={`${firstname} ${lastName} `}
